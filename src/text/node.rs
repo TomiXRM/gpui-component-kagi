@@ -1157,8 +1157,14 @@ impl Node {
                 .into_any_element(),
             Node::Paragraph(paragraph) => div()
                 .id("p")
-                .pt(node_cx.style.paragraph_top_gap)
-                .pb(rems(mb.0 + node_cx.style.paragraph_bottom_gap.0))
+                // The extra gaps are block-level air; inside a list item the
+                // paragraph sits next to a bare-string marker (`1.` / `•`),
+                // so any padding here shifts the text below the marker.
+                .when(!options.in_list, |this| {
+                    this.pt(node_cx.style.paragraph_top_gap)
+                        .pb(rems(mb.0 + node_cx.style.paragraph_bottom_gap.0))
+                })
+                .when(options.in_list, |this| this.pb(mb))
                 .child(paragraph.render(node_cx, window, cx))
                 .into_any_element(),
             Node::Heading { level, children } => {
