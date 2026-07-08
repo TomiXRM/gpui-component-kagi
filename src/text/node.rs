@@ -1157,6 +1157,7 @@ impl Node {
                 .into_any_element(),
             Node::Paragraph(paragraph) => div()
                 .id("p")
+                .pt(node_cx.style.paragraph_top_gap)
                 .pb(mb)
                 .child(paragraph.render(node_cx, window, cx))
                 .into_any_element(),

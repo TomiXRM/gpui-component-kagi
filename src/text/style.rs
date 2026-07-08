@@ -13,6 +13,8 @@ pub struct TextViewStyle {
     pub heading_base_font_size: Pixels,
     /// Extra top gap above headings, default is 0 (kagi fork addition).
     pub heading_top_gap: Rems,
+    /// Extra top gap above paragraphs, default is 0 (kagi fork addition).
+    pub paragraph_top_gap: Rems,
     /// Function to calculate heading font size based on heading level (1-6).
     ///
     /// The first parameter is the heading level (1-6), the second parameter is the base font size.
@@ -39,6 +41,7 @@ impl Default for TextViewStyle {
             paragraph_gap: rems(1.),
             heading_base_font_size: px(14.),
             heading_top_gap: rems(0.),
+            paragraph_top_gap: rems(0.),
             heading_font_size: None,
             highlight_theme: HighlightTheme::default_light().clone(),
             code_block: StyleRefinement::default(),
