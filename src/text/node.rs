@@ -1158,7 +1158,7 @@ impl Node {
             Node::Paragraph(paragraph) => div()
                 .id("p")
                 .pt(node_cx.style.paragraph_top_gap)
-                .pb(Rems(mb.0 + node_cx.style.paragraph_bottom_gap.0))
+                .pb(rems(mb.0 + node_cx.style.paragraph_bottom_gap.0))
                 .child(paragraph.render(node_cx, window, cx))
                 .into_any_element(),
             Node::Heading { level, children } => {
