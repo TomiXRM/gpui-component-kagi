@@ -1178,6 +1178,7 @@ impl Node {
 
                 h_flex()
                     .id(("h", *level as usize))
+                    .pt(node_cx.style.heading_top_gap)
                     .pb(rems(0.3))
                     .whitespace_normal()
                     .text_size(text_size)
