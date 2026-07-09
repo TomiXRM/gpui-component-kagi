@@ -170,7 +170,7 @@ impl Inline {
                     point(end_position.x, end_position.y + line_height),
                 ),
                 px(0.),
-                cx.theme().selection,
+                selection_overlay_color(cx),
                 Edges::default(),
                 gpui::transparent_black(),
                 BorderStyle::default(),
@@ -182,7 +182,7 @@ impl Inline {
                     point(bounds.right(), start_position.y + line_height),
                 ),
                 px(0.),
-                cx.theme().selection,
+                selection_overlay_color(cx),
                 Edges::default(),
                 gpui::transparent_black(),
                 BorderStyle::default(),
@@ -195,7 +195,7 @@ impl Inline {
                         point(bounds.right(), end_position.y),
                     ),
                     px(0.),
-                    cx.theme().selection,
+                    selection_overlay_color(cx),
                     Edges::default(),
                     gpui::transparent_black(),
                     BorderStyle::default(),
@@ -208,7 +208,7 @@ impl Inline {
                     point(end_position.x, end_position.y + line_height),
                 ),
                 px(0.),
-                cx.theme().selection,
+                selection_overlay_color(cx),
                 Edges::default(),
                 gpui::transparent_black(),
                 BorderStyle::default(),
@@ -541,4 +541,13 @@ mod tests {
             line_height
         ));
     }
+}
+
+/// Selection overlay color: the quad is painted OVER the glyphs (see
+/// `paint`), so an opaque theme selection color would hide the text
+/// completely. Cap the alpha. Kagi fork addition — not upstream.
+fn selection_overlay_color(cx: &App) -> gpui::Hsla {
+    use crate::ActiveTheme as _;
+    let c = cx.theme().selection;
+    if c.a > 0.45 { c.opacity(0.45 / c.a) } else { c }
 }
