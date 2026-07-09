@@ -239,7 +239,7 @@ impl Language {
             ),
             Self::Cpp => (
                 tree_sitter_cpp::LANGUAGE,
-                tree_sitter_cpp::HIGHLIGHT_QUERY,
+                cpp_highlight_query(),
                 "",
                 "",
             ),
@@ -397,4 +397,19 @@ mod tests {
         assert_eq!(Language::Erb.name(), "erb");
         assert_eq!(Language::Ejs.name(), "ejs");
     }
+}
+
+/// tree-sitter-cpp's HIGHLIGHT_QUERY contains only the C++-specific
+/// captures and is meant to be combined with tree-sitter-c's base query
+/// (strings, comments, numbers, core keywords); alone it highlights almost
+/// nothing. Kagi fork addition — not upstream.
+fn cpp_highlight_query() -> &'static str {
+    static QUERY: std::sync::OnceLock<String> = std::sync::OnceLock::new();
+    QUERY.get_or_init(|| {
+        format!(
+            "{}\n{}",
+            tree_sitter_c::HIGHLIGHT_QUERY,
+            tree_sitter_cpp::HIGHLIGHT_QUERY
+        )
+    })
 }
