@@ -549,5 +549,5 @@ mod tests {
 fn selection_overlay_color(cx: &App) -> gpui::Hsla {
     use crate::ActiveTheme as _;
     let c = cx.theme().selection;
-    if c.a > 0.45 { c.opacity(0.45 / c.a) } else { c }
+    if c.a > 0.3 { c.opacity(0.3 / c.a) } else { c }
 }
